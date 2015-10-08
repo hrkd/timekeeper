@@ -44,7 +44,11 @@ http://railsguides.jp/association_basics.html
 アソシエーション
 
 http://joppot.info/2014/05/23/1430
+http://qiita.com/zaru/items/cde2c46b6126867a1a64
 カラムの追加（マイグレーションの作成）
 
 http://easyramble.com/rails-admin-manager.html
 RailsAdminの利用
+
+http://railsdoc.com/references/SQLite
+SQLite
