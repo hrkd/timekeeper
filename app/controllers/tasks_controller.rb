@@ -21,6 +21,12 @@ class TasksController < ApplicationController
   def edit
   end
 
+  # GET /tasks/works
+  # GET /tasks/works.json
+  def works
+  end
+
+
   # POST /tasks
   # POST /tasks.json
   def create
