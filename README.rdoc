@@ -26,3 +26,25 @@ Things you may want to cover:
 
 Please feel free to use a different markup language if you do not plan to run
 <tt>rake doc:app</tt>.
+
+
+== memo
+
+http://qiita.com/youcune/items/222777415f00d19cccb4
+インストール
+
+http://qiita.com/Salinger/items/873e3c667462746ae707
+http://ruby-rails.hatenadiary.com/entry/20140804/1407168000
+ログイン認証の実装
+
+http://techracho.bpsinc.jp/baba/2011_07_15/3947
+タイムゾーンの設定
+
+http://railsguides.jp/association_basics.html
+アソシエーション
+
+http://joppot.info/2014/05/23/1430
+カラムの追加（マイグレーションの作成）
+
+http://easyramble.com/rails-admin-manager.html
+RailsAdminの利用
