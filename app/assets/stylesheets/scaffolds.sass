@@ -1,0 +1,56 @@
+@import 'vendors/sanitize.scss'
+@import 'https://fonts.googleapis.com/css?family=Oswald:700&subset=latin,latin-ext'
+
+
+body
+  h1,h2
+    font-family: 'Oswald', sans-serif
+  position: relative
+  header
+    background: rgba(0,0,0,.5)
+    position: fixed
+    top: 0
+    left: 0
+    width: 100%
+    line-height: 1em
+    h1
+      font-size: 1em
+      display: inline-block
+    p
+      font-size: 0.8em
+      display: inline-block
+    color: #fff
+    a
+      color: #fff
+      text-decoration: underline
+    padding: 10px
+
+  .task
+    background: #FFE100
+    color: #fff
+    padding: 60px 40px
+    border-bottom: 1px solid #fff
+    a
+      color: #fff
+    h2
+      font-size: 3em
+      text-transform: uppercase
+
+    .wrapper
+      display: table
+      width: 100%
+      div
+        display: table-cell
+        width: 50%
+        form
+
+        input
+          border: 1px solid #fff
+          color: #FFE100
+          padding: 10px 20px
+          cursor: pointer
+          background: #fff
+        input:disabled
+          background: none
+          color: #fff
+          cursor: default
