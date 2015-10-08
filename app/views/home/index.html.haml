@@ -1,15 +1,34 @@
-%h1
-  Home#index
-
--if user_signed_in?
-  Logged in as
-  %strong
-    = current_user.email
-    = link_to "Settings", edit_user_registration_path, :class => "navbar-link"
-    = link_to "Logout", destroy_user_session_path, method: :delete, :class => "navbar-link"
--else
-  = link_to "Sign up", new_user_registration_path, :class => 'navbar-link' |
-  = link_to "Login", new_user_session_path, :class => 'navbar-link'
-
+-if notice
+  %p.alert.alert-success
+    = notice
+-if alert
+  %p.alert.alert-danger
+    = alert
 %p
-  Find me in app/views/home/index.html.haml
+  -@tasks.each do |var|
+    %div.task
+      %h2
+        = link_to var.name, :controller => "tasks", :action => "works"
+
+      .wrapper
+        -if var.works.find_all{|el| el.endtime == nil}.count == 1
+          - task = var.works.find_all{|el| el.endtime == nil}[0]
+          %div
+            = form_tag do
+              = submit_tag "Start at #{task.starttime}",:disabled=>true
+
+          %div
+            = form_tag "works/#{task.id}", :method => :put do
+              = hidden_field :work, :endtime, :value => Time.now
+              = submit_tag("End")
+        -else
+          %div
+            = form_tag "works/" do
+              = hidden_field :work, :starttime, :value => Time.now
+              = hidden_field :work, :task_id, :value => var.id
+              = submit_tag("Start")
+
+          %div
+            = form_tag do
+              = submit_tag "End",:disabled=>true
+
