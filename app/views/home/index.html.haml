@@ -6,6 +6,7 @@
 
       .wrapper
         -if var.works.find_all{|el| el.endtime == nil}.count == 1
+          /- 既に就業中
           - task = var.works.find_all{|el| el.endtime == nil}[0]
           %div
             = form_tag do
@@ -13,12 +14,13 @@
 
           %div
             = form_tag "works/#{task.id}", :method => :put do
-              = hidden_field :work, :endtime, :value => Time.now
+              = hidden_field :work, :start, :value => false
               = submit_tag("End")
         -else
+          /- 就業前
           %div
             = form_tag "works/" do
-              = hidden_field :work, :starttime, :value => Time.now
+              = hidden_field :work, :start, :value => true
               = hidden_field :work, :task_id, :value => var.id
               = submit_tag("Start")
 
