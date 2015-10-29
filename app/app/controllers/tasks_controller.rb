@@ -24,7 +24,19 @@ class TasksController < ApplicationController
   # GET /tasks/works
   # GET /tasks/works.json
   def works
+    works = Work.where(:task_id => params[:id], :created_at => Time.now.beginning_of_month..Time.now.end_of_month)
+    @works = works.map {|item| {
+      id: item.id,
+      start: item.starttime,
+      end: item.endtime,
+      duration: (item.endtime) ? item.endtime.to_i - item.starttime.to_i : 0 ,
+      duration_s: (item.endtime) ? get_time_diff( item.starttime.to_i, item.endtime.to_i) : get_time_diff(0, 0) ,
+    }}
+
+    #see http://www.xmisao.com/2014/03/25/how-to-sum-array-of-numbers-in-ruby.html
+    @sum = get_time(@works.map {|item| item[:duration] }.inject(:+))
   end
+
 
 
   # POST /tasks
@@ -68,6 +80,19 @@ class TasksController < ApplicationController
   end
 
   private
+    def get_time day
+      hours = day.divmod(60*60)
+      mins = hours[1].divmod(60)
+
+      "#{hours[0].to_i}h #{mins[0].to_i}m #{mins[1]}s"
+    end
+    def get_time_diff day1, day2
+      hours = (day2 - day1).divmod(60*60)
+      mins = hours[1].divmod(60)
+
+      "#{hours[0].to_i}h #{mins[0].to_i}m #{mins[1]}s"
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_task
       @task = Task.find(params[:id])

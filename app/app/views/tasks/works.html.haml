@@ -1,0 +1,14 @@
+%h2
+  = @sum
+
+%table.table.table-striped
+  -@works.each do |var|
+    %tr
+      %td
+        = var[:id]
+      %td
+        = var[:start]
+      %td
+        = var[:end]
+      %td
+        = var[:duration_s]
