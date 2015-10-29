@@ -69,8 +69,9 @@ class WorksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def work_params
-      p = params.require(:work).permit(:task_id,:start)
-      if p.fetch('start') == 'true' then
+      p = params.require(:work).permit(:task_id,:starttime,:endtime,:start)
+
+      if p.fetch('start')=='true' then
         {starttime: Time.now,task_id:p.fetch('task_id')}
       else
         {endtime: Time.now}
