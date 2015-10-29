@@ -2,10 +2,15 @@
   = @sum
 
 %table.table.table-striped
+  %tr
+    %th
+      = :start
+    %th
+      = :end
+    %th
+      = :duration
   -@works.each do |var|
     %tr
-      %td
-        = var[:id]
       %td
         = var[:start]
       %td

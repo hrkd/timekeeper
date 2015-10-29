@@ -24,9 +24,8 @@ class TasksController < ApplicationController
   # GET /tasks/works
   # GET /tasks/works.json
   def works
-    works = Work.where(:task_id => params[:id], :created_at => Time.now.beginning_of_month..Time.now.end_of_month)
+    works = Work.where(:task_id => params[:id], :starttime => Time.now.beginning_of_month..Time.now.end_of_month).order("starttime DESC")
     @works = works.map {|item| {
-      id: item.id,
       start: item.starttime,
       end: item.endtime,
       duration: (item.endtime) ? item.endtime.to_i - item.starttime.to_i : 0 ,
