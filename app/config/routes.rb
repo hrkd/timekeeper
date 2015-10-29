@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :admins
   resources :works
   resources :tasks
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
