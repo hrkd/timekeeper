@@ -1,30 +1,28 @@
-%p
-  -@tasks.each do |var|
-    %div.task
-      %h2
-        = link_to var.name, :controller => "tasks", :action => "works"
+-@tasks.each do |var|
+  %h2
+    = link_to var.name,"tasks/works/#{var.id}"
 
-      .wrapper
-        -if var.works.find_all{|el| el.endtime == nil}.count == 1
-          /- 既に就業中
-          - task = var.works.find_all{|el| el.endtime == nil}[0]
-          %div
-            = form_tag do
-              = submit_tag "Start at #{task.starttime}",:disabled=>true
+  .row
+    -if var.works.find_all{|el| el.endtime == nil}.count == 1
+      /- 既に就業中
+      - task = var.works.find_all{|el| el.endtime == nil}[0]
+      .col-xs-6
+        = form_tag do
+          = submit_tag "Start at #{task.starttime}",:disabled=>true, :class => "btn btn-default"
 
-          %div
-            = form_tag "works/#{task.id}", :method => :put do
-              = hidden_field :work, :start, :value => false
-              = submit_tag("End")
-        -else
-          /- 就業前
-          %div
-            = form_tag "works/" do
-              = hidden_field :work, :start, :value => true
-              = hidden_field :work, :task_id, :value => var.id
-              = submit_tag("Start")
+      .col-xs-6
+        = form_tag "works/#{task.id}", :method => :put do
+          = hidden_field :work, :start, :value => false
+          = submit_tag("End", :class => "btn btn-default btn-primary")
+    -else
+      /- 就業前
+      .col-xs-6
+        = form_tag "works/" do
+          = hidden_field :work, :start, :value => true
+          = hidden_field :work, :task_id, :value => var.id
+          = submit_tag("Start", :class => "btn btn-default btn-primary")
 
-          %div
-            = form_tag do
-              = submit_tag "End",:disabled=>true
-
+      .col-xs-6
+        = form_tag do
+          = submit_tag "End",:disabled=>true, :class => "btn btn-default"
+  %hr
