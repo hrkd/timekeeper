@@ -1,6 +1,10 @@
+
+= link_to 'add task',"tasks/new/", :class => "btn btn-default"
+
+
 -@tasks.each do |var|
   %h2
-    = link_to var.name,"tasks/works/#{var.id}"
+    = link_to var.name,"tasks/works/#{var.id}?year=#{Time.now.year}&amp;month=#{Time.now.month}"
 
   .row
     -if var.works.find_all{|el| el.endtime == nil}.count == 1
@@ -11,9 +15,12 @@
           = submit_tag "Start at #{task.starttime}",:disabled=>true, :class => "btn btn-default"
 
       .col-xs-6
-        = form_tag "works/#{task.id}", :method => :put do
+        = form_tag "works/#{task.id}",:class =>"form-inline", :method => :put do
           = hidden_field :work, :start, :value => false
           = submit_tag("End", :class => "btn btn-default btn-primary")
+          %label
+            = check_box 'work', 'is_exist_breaktime', {:checked => false}, true, false
+            had a nice break!
     -else
       /- 就業前
       .col-xs-6
