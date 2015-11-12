@@ -24,16 +24,39 @@ class TasksController < ApplicationController
   # GET /tasks/works
   # GET /tasks/works.json
   def works
-    works = Work.where(:task_id => params[:id], :starttime => Time.now.beginning_of_month..Time.now.end_of_month).order("starttime DESC")
+    require 'holiday_jp'
+
+    time =  Time.local(params[:year], params[:month])
+    holiday = HolidayJp.between(time.beginning_of_month, time.end_of_month)
+    works = Work.where(:task_id => params[:id], :starttime => time.beginning_of_month..time.end_of_month).order("starttime DESC")
     @works = works.map {|item| {
       start: item.starttime,
       end: item.endtime,
-      duration: (item.endtime) ? item.endtime.to_i - item.starttime.to_i : 0 ,
-      duration_s: (item.endtime) ? get_time_diff( item.starttime.to_i, item.endtime.to_i) : get_time_diff(0, 0) ,
+      duration: get_duration(item.starttime, item.endtime, item.is_exist_breaktime) ,
+      duration_s: get_duration_to_s(get_duration(item.starttime, item.endtime, item.is_exist_breaktime)),
+      break: item.is_exist_breaktime,
     }}
 
+    for num in 1..3 do
+      print("num = ", num, "¥n")
+    end
+
+    @days = time.at_end_of_month.day - holiday.length - get_this_sat_sun_days(time)
+    seconds = @days*8*60*60
+
     #see http://www.xmisao.com/2014/03/25/how-to-sum-array-of-numbers-in-ruby.html
-    @sum = get_time(@works.map {|item| item[:duration] }.inject(:+))
+    sum = @works.map {|item| item[:duration] }.inject(:+)
+    @year = params[:year]
+    @month= params[:month]
+    @sum = (sum) ? get_duration_to_s(sum):0
+
+    @max = get_duration_to_s(seconds)
+    @persent = (sum.to_f / seconds.to_f * 100).round
+
+    @max_amount = 45
+
+    @amount = 45 * (@persent.to_f / 100)
+
   end
 
 
@@ -79,17 +102,23 @@ class TasksController < ApplicationController
   end
 
   private
-    def get_time day
+    def get_duration starttime, endtime, breaktime
+      if(endtime) then
+        if(breaktime) then
+          endtime.to_i - starttime.to_i - (60*60)
+        else
+          endtime.to_i - starttime.to_i
+        end
+      else
+        0
+      end
+    end
+
+    def get_duration_to_s day
       hours = day.divmod(60*60)
       mins = hours[1].divmod(60)
 
-      "#{hours[0].to_i}h #{mins[0].to_i}m #{mins[1]}s"
-    end
-    def get_time_diff day1, day2
-      hours = (day2 - day1).divmod(60*60)
-      mins = hours[1].divmod(60)
-
-      "#{hours[0].to_i}h #{mins[0].to_i}m #{mins[1]}s"
+      "#{hours[0].to_i}h-#{mins[0].to_i}m-#{mins[1]}s"
     end
 
     # Use callbacks to share common setup or constraints between actions.
@@ -101,4 +130,17 @@ class TasksController < ApplicationController
     def task_params
       params[:task]
     end
+
+
+    def get_this_sat_sun_days time
+      num = 1
+      endday = time.end_of_month.strftime("%e")
+      month = Array.new
+      while num <= endday.to_i do
+        month << Time.local(params[:year], params[:month], num.to_s).wday
+        num = num+1
+      end
+      month.select {|item| item == 0 || item == 6}.length
+    end
+
 end

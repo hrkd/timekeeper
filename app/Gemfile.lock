@@ -74,6 +74,7 @@ GEM
       activesupport (>= 4.1.0)
     haml (4.0.7)
       tilt
+    holiday_jp (0.4.3)
     html2haml (2.0.0)
       erubis (~> 2.7.0)
       haml (~> 4.0.0)
@@ -211,6 +212,7 @@ DEPENDENCIES
   coffee-rails (~> 4.1.0)
   devise
   erb2haml
+  holiday_jp
   jbuilder (~> 2.0)
   jquery-rails
   rails (= 4.2.4)

@@ -34,6 +34,8 @@ gem 'bcrypt', '~> 3.1.7'
 # gem 'capistrano-rails', group: :development
 
 
+gem 'holiday_jp'
+
 gem 'devise'
 gem "cancancan"
 gem 'rails_admin'

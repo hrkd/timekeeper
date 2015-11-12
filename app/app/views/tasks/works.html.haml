@@ -1,11 +1,12 @@
 %h2
   = "#{@month} / #{@year}"
 %h3
-  = "#{@sum} / #{@max}"
+  = "稼働時間 #{@persent}% ( #{@sum} / #{@max} )"
 %h4
-  = "稼働時間 #{@persent}%"
+  = "稼働可能日数:#{@days}日"
 %h5
   = "#{@amount} / #{@max_amount}"
+
 
 %table.table.table-striped
   %tr
