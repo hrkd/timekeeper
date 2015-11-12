@@ -1,13 +1,26 @@
 Rails.application.routes.draw do
   devise_for :admins
-  resources :works
-  resources :tasks
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   devise_for :users
   get 'home/index'
-  get 'home/tasks'
-  get 'tasks/works/:id', to: 'tasks#works'
   root 'home#index'
+
+  resources :works do
+  end
+
+  resources :tasks do
+  #     member do
+  #       get 'short'
+  #       post 'toggle'
+  #     end
+  #
+  #     collection do
+  #       get 'sold'
+  #     end
+  end
+
+
+  get 'tasks/works/:id', to: 'tasks#works'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
