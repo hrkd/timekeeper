@@ -1,0 +1,60 @@
+// This is a manifest file that'll be compiled into application.js, which will include all the files
+// listed below.
+//
+// Any JavaScript/Coffee file within this directory, lib/assets/javascripts, vendor/assets/javascripts,
+// or any plugin's vendor/assets/javascripts directory can be referenced here using a relative path.
+//
+// It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
+// compiled file.
+//
+// Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
+// about supported directives.
+//
+//= require jquery
+//= require jquery_ujs
+//= require turbolinks
+//= require_tree .
+;'use strict';
+var APP = APP||function(){
+  this.init();
+};
+
+(function($,win,doc,APP){
+var p = APP.prototype;
+
+p.getLocObj = function(){
+  var search = location.search.split('?')[1].split("&amp;"),
+  searchObj = new Array(),
+  obj;
+
+  for(var i=0;i<search.length;i++){
+    searchObj[search[i].split('=')[0]] = search[i].split('=')[1];
+  }
+  return searchObj;
+}
+
+p.objToStr= function(obj){
+  var str ="";
+  Object.keys(obj).forEach(function (key) {
+    str = str + "&" + key + "=" + obj[key];
+  });
+  str = '?'+str.substr(1);
+  return str;
+}
+
+p.init = function(){
+  var that = this,
+  $target = $('.month-picker');
+  $target.find('button').on('click',function(){
+    var year = $target.find('#pick_year').val(),
+    month = $target.find('#pick_month').val();
+
+    location.href = location.origin+location.pathname+that.objToStr({year:year,month:month});
+  });
+}
+
+$(function(){
+  var app = new APP();
+});
+
+})($,window,document,APP);

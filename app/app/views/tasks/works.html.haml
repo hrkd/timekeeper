@@ -1,10 +1,15 @@
+.form-inline.month-picker
+  = select :pick, :month, @selected_month, {:selected=>@month}, { class: "form-control" }
+  = select :pick, :year, @selected_year, {:selected=>@year}, { class: "form-control" }
+
+  %button.btn.btn-primary
+    表示
+
 %h2
-  = "#{@month} / #{@year}"
-%h3
   = "稼働時間 #{@persent}% ( #{@sum} / #{@max} )"
-%h4
+%h3
   = "稼働可能日数:#{@days}日"
-%h5
+%h4
   = "#{@amount} / #{@max_amount}"
 
 

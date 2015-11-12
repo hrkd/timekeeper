@@ -37,10 +37,6 @@ class TasksController < ApplicationController
       break: item.is_exist_breaktime,
     }}
 
-    for num in 1..3 do
-      print("num = ", num, "¥n")
-    end
-
     @days = time.at_end_of_month.day - holiday.length - get_this_sat_sun_days(time)
     seconds = @days*8*60*60
 
@@ -54,9 +50,17 @@ class TasksController < ApplicationController
     @persent = (sum.to_f / seconds.to_f * 100).round
 
     @max_amount = 45
+    @amount = @max_amount * (@persent.to_f / 100)
 
-    @amount = 45 * (@persent.to_f / 100)
+    @selected_month = Array.new
+    for num in 1..12 do
+      @selected_month << num
+    end
 
+    @selected_year = Array.new
+    for num in 0..4 do
+      @selected_year << Time.now.strftime("%Y").to_i - 4 + num
+    end
   end
 
 
